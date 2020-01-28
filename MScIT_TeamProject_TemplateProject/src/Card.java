@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 
 public class Card {
-	
+	// Constructor including all the variables of the card
 	public Card(String name, int size, int speed, int range, int firepower, int cargo) {
 		this.name = name;
 		this.size = size;
@@ -16,126 +16,76 @@ public class Card {
 		this.cargo = cargo;
 		
 		}
-	
-	public static void main(String[]args) {
-		Card shipArray[] = new Card[40];
-		shipArrayFill();
-	}
-////		shipArray[0] = new Card("350r", 1, 9, 2, 3, 0);
-////		System.out.println(shipArray[0]);
-//		int nShips = 0;
-//		
-//		
-//		FileReader fr = null;
-//		try {
-//			fr = new FileReader("C:\\Users\\atrai\\TeamProject\\Workspace\\MScIT_TeamProject_TemplateProject\\MScIT_TeamProject_TemplateProject/TopTrumpsCsv.csv");
-//
-////			fr = new FileReader("C:\\Users\\atrai\\TeamProject\\Workspace\\MScIT_TeamProject_TemplateProject\\MScIT_TeamProject_TemplateProject/StarCitizenDeck.txt");
-////			String fN = "C:\\Users\\atrai\\TeamProject\\Workspace\\MScIT_TeamProject_TemplateProject\\MScIT_TeamProject_TemplateProject/StarCitizenDeck.txt";
-//			Scanner s = new Scanner(fr);
-//			while(s.hasNextLine()) {
-//				String line = s.nextLine();
-//				String[] shipData = line.split(",");
-//				String shipName = shipData[0];
-//				int shipSize = Integer.parseInt(shipData[1]);
-//				int shipSpeed = Integer.parseInt(shipData[2]);
-//				int shipRange = Integer.parseInt(shipData[3]);
-//				int shipFirepower = Integer.parseInt(shipData[4]);
-//				int shipCargo = Integer.parseInt(shipData[5]);
-//				shipArray[nShips++] = new Card(shipName, shipSize, shipSpeed, shipRange, shipFirepower, shipCargo);
-//				
-//				
-//			}
-////			fr = new FileReader(fN);
-//		
-//		}catch(FileNotFoundException e) {
-//			e.printStackTrace();
-//		}finally {
-//			try {
-//				fr.close();
-//				
-//			}catch(IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		if(nShips>0) {
-//			for(int i=0; i<nShips; i++) {
-//				System.out.println(shipArray[i]);
-//			}
-//		}
-//		
-//		
-////		Card card = new Card("bob",1,2,3,4,5);
-////		System.out.println(card);
-//	}
-	
+
+	// Method to fill the ship Array of all 40 slots via fileIO upload
 	public static Card[] shipArrayFill() {
+		// Array of number of cards within the deck
 		Card shipArray[] = new Card[40];
-//		shipArray[0] = new Card("350r", 1, 9, 2, 3, 0);
-//		System.out.println(shipArray[0]);
+		// Integer for number of ships, used to cycle array later
 		int nShips = 0;
 		
-		
+		// Opening filereader
 		FileReader fr = null;
 		try {
+			
+			// Reading the path to the file in question
 			fr = new FileReader("C:\\Users\\atrai\\TeamProject\\Workspace\\MScIT_TeamProject_TemplateProject\\MScIT_TeamProject_TemplateProject/TopTrumpsCsv.csv");
-
-//			fr = new FileReader("C:\\Users\\atrai\\TeamProject\\Workspace\\MScIT_TeamProject_TemplateProject\\MScIT_TeamProject_TemplateProject/StarCitizenDeck.txt");
-//			String fN = "C:\\Users\\atrai\\TeamProject\\Workspace\\MScIT_TeamProject_TemplateProject\\MScIT_TeamProject_TemplateProject/StarCitizenDeck.txt";
+			// Scanner to read through the file
 			Scanner s = new Scanner(fr);
+			// Loops until there are no more lines in the file
 			while(s.hasNextLine()) {
+				// Cycles through each line
 				String line = s.nextLine();
+				// Splits via comma (file is csv, each field deliminated by comma)
 				String[] shipData = line.split(",");
+				// Putting the ship details into the newly created array
 				String shipName = shipData[0];
 				int shipSize = Integer.parseInt(shipData[1]);
 				int shipSpeed = Integer.parseInt(shipData[2]);
 				int shipRange = Integer.parseInt(shipData[3]);
 				int shipFirepower = Integer.parseInt(shipData[4]);
 				int shipCargo = Integer.parseInt(shipData[5]);
+				// Cycles array, puts the variables of the ship into the actual array
 				shipArray[nShips++] = new Card(shipName, shipSize, shipSpeed, shipRange, shipFirepower, shipCargo);
 				
 				
 			}
-//			fr = new FileReader(fN);
-		
+			// Catches exception if file isn't found
 		}catch(FileNotFoundException e) {
 			e.printStackTrace();
+			// Close filereader
 		}finally {
 			try {
 				fr.close();
-				
+				// Displays error message/details if ioexception
 			}catch(IOException e) {
 				e.printStackTrace();
 			}
 		}
+		// If statement to print each ship in the array
 		if(nShips>0) {
 			for(int i=0; i<nShips; i++) {
-//				System.out.println(shipArray[i]);
-//				return shipArray;
 			}
 		}
 		return shipArray;
 		
 		
-//		Card card = new Card("bob",1,2,3,4,5);
-//		System.out.println(card);
 	
 	}
-	
+	// ToString to format and print the array
 	public String toString() {
 		return "Name: " + name + ", Size: " + size + ", Speed: " + speed + ", Range: " + range + ", Firepower: " +  firepower + ", Cargo: " + cargo;
 		
 	}
-	public void cardArray() {
-		
-	}
-	
+	// Global variables
 	String name;
 	int size;
 	int speed;
 	int range;
 	int firepower;
 	int cargo;
+	
+	
 	public String getName() {
 		return name;
 	}
