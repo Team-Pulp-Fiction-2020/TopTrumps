@@ -29,7 +29,7 @@ public class Card {
 		try {
 			
 			// Reading the path to the file in question
-			fr = new FileReader("C:\\Users\\atrai\\TeamProject\\Workspace\\MScIT_TeamProject_TemplateProject\\MScIT_TeamProject_TemplateProject/TopTrumpsCsv.csv");
+			fr = new FileReader("C:\\Users\\steph\\Desktop\\Uni\\MSc Team Project\\workspace\\MScIT_TeamProject_TemplateProject\\MScIT_TeamProject_TemplateProject/TopTrumpsCsv.csv");
 			// Scanner to read through the file
 			Scanner s = new Scanner(fr);
 			// Loops until there are no more lines in the file
@@ -74,7 +74,7 @@ public class Card {
 	}
 	// ToString to format and print the array
 	public String toString() {
-		return "Name: " + name + ", Size: " + size + ", Speed: " + speed + ", Range: " + range + ", Firepower: " +  firepower + ", Cargo: " + cargo;
+		return "\n Name: " + name + ", Size: " + size + ", Speed: " + speed + ", Range: " + range + ", Firepower: " +  firepower + ", Cargo: " + cargo;
 		
 	}
 	// Global variables
