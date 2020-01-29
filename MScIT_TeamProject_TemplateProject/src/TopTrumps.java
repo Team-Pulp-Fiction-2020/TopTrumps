@@ -30,7 +30,9 @@ public class TopTrumps {
 						+ "\n\t\tAverage Number of Draws: " + connection.getAvgDraws()
 						+ "\n\t\tLongest Game: " + connection.getLongestGame());
 			}else {
-			//playGame()
+			//playGame()?
+				System.out.println("Game Start\nRound1\nRound 1:Players have drawn their cards!\n"
+						+ "you drew " + ); //getCard method? and use toString to print card
 		}
 			}catch (Exception e) {
 			System.out.println("please enter either 1 or 2");
