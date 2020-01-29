@@ -24,7 +24,11 @@ public class TopTrumps {
 				+ "Enter the number for your selection:");
 		try{ if (scanner.nextInt() == 1) {
 				System.out.println("\n\n\nGame Statistics:\n"
-						+ "\t\t\tNumber of Games:" + connection.getGamesPlayed());
+						+ "\t\t\tNumber of Games: " + connection.getGamesPlayed()
+						+ "\n\t\tNumber of Human Wins: " + connection.getHumanWins()
+						+ "\n\t\tNumber of AI Wins: " + connection.getComputerWins()
+						+ "\n\t\tAverage Number of Draws: " + connection.getAvgDraws()
+						+ "\n\t\tLongest Game: " + connection.getLongestGame());
 			}else {
 			//playGame()
 		}
