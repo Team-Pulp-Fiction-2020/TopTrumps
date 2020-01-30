@@ -32,7 +32,7 @@ public class TopTrumps {
 			}else {
 			//playGame()?
 				System.out.println("Game Start\nRound1\nRound 1:Players have drawn their cards!\n"
-						+ "you drew " + ); //getCard method? and use toString to print card
+						+ "you drew "); // + getCard method? and use toString to print card
 		}
 			}catch (Exception e) {
 			System.out.println("please enter either 1 or 2");

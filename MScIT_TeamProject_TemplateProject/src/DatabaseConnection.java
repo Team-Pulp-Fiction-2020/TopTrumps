@@ -62,7 +62,7 @@ public DatabaseConnection() throws SQLException {
     Statement statement3 = connection.createStatement();
     ResultSet resultHumanWins = statement3.executeQuery(sql3);
     while(resultHumanWins.next()) {
-        computerWins = resultHumanWins.getInt(2);
+        humanWins = resultHumanWins.getInt(2);
     }
     Statement statement4 = connection.createStatement();
     ResultSet resultAvgDraws = statement4.executeQuery(sql4);
