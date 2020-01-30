@@ -1,6 +1,8 @@
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import commandline.DatabaseConnection;
+import commandline.PlayGame;
 import commandline.TopTrumpsCLIApplication;
 
 import online.TopTrumpsOnlineApplication;
@@ -30,9 +32,15 @@ public class TopTrumps {
 						+ "\n\t\tAverage Number of Draws: " + connection.getAvgDraws()
 						+ "\n\t\tLongest Game: " + connection.getLongestGame());
 			}else {
-			//playGame()?
+				System.out.println("How many players are there? (2-5)");
+				try {
+				PlayGame play = new PlayGame(scanner.nextInt());
+				play.deal();
 				System.out.println("Game Start\nRound1\nRound 1:Players have drawn their cards!\n"
 						+ "you drew "); // + getCard method? and use toString to print card
+				}catch(Exception e) {
+					System.out.println("please enter a number 2, 3, 4 or 5");
+				}
 		}
 			}catch (Exception e) {
 			System.out.println("please enter either 1 or 2");
