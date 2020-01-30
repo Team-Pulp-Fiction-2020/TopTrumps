@@ -74,7 +74,7 @@ public class Card {
 	}
 	// ToString to format and print the array
 	public String toString() {
-		return "Name: " + name + ", Size: " + size + ", Speed: " + speed + ", Range: " + range + ", Firepower: " +  firepower + ", Cargo: " + cargo;
+		return "'" + name + "':\nSize: " + size + "\nSpeed: " + speed + "\nRange: " + range + "\nFirepower: " +  firepower + "\nCargo: " + cargo;
 		
 	}
 	// Global variables

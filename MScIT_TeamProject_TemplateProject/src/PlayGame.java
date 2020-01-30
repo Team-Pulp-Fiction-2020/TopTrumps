@@ -4,7 +4,7 @@ import java.util.Random;
 public class PlayGame {
 	// create attributes
 	private int noOfPlayers;
-	private int noOfRounds;
+	private int noOfRounds = 1;
 	private int noOfDraws;
 	private String winnerofRound;
 	private String gameWinner = "";
