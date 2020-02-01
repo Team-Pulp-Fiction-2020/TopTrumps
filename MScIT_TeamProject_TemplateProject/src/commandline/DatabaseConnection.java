@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DatabaseConnection {
+//variables declared for data retrieved from database
  private int gamesPlayed = 0;
  private int computerWins = 0;
  private int humanWins = 0;
@@ -29,6 +30,8 @@ public DatabaseConnection() throws SQLException {
   //proceed with a database connection
   Connection connection = null;
   // connect to the yacata.dcs.gla.ac.uk server, on port:5432
+  
+  //list of sql statements for querying the database
   String sql1 = "SELECT COUNT(GameID) AS Total_No_Games FROM Games;";
   String sql2 = "SELECT COUNT (Winner) AS Computer_Wins FROM Games WHERE Winner > 0;";
   String sql3 = "SELECT COUNT (Winner) AS Human_Wins FROM Games WHERE Winner = 0;";
@@ -50,6 +53,9 @@ public DatabaseConnection() throws SQLException {
   if (connection != null) {
    try {
     System.out.println("Controlling your database!");
+    
+    //sql statements created and executed, results returned and variables set -
+    //one for each sql statement
     Statement statement1 = connection.createStatement();
     ResultSet resultGamesPlayed = statement1.executeQuery(sql1);
     while(resultGamesPlayed.next()) {
@@ -89,7 +95,7 @@ public DatabaseConnection() throws SQLException {
   //if-else
   
  }
-
+	//getters so that other parts of the system can retrieve the data
 	public int getGamesPlayed() {
 		return gamesPlayed;
 	}
