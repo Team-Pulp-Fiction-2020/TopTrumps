@@ -38,10 +38,42 @@ public class MainTests {
 //		// print out the empty comPile array
 //		System.out.println(communal.comPile);
 		
-		// test maxNum
-		int [] numbers = new int[] {10, 4, 8, 24, 18};
-		//print the position of first instance of max number
-		System.out.println(play.maxNum(numbers));
+//		// test maxNum and maxNumPos
+//		int [] numbers = new int[] {10, 4, 8, 24, 18};
+//		//print the position of first instance of max number
+//		System.out.println(play.maxNum(numbers));
+//		System.out.println(play.maxNumPos(numbers));
+		
+		//test checkRound method
+	//	play.deal(); // deals and shuffles cards
+		// print top cards for all players
+//		System.out.println(play.getPlayersArrayList().get(0).getCardsArray().get(0).toString());
+//		System.out.println(play.getPlayersArrayList().get(1).getCardsArray().get(0).toString());
+//		System.out.println(play.getPlayersArrayList().get(2).getCardsArray().get(0).toString());
+//		System.out.println(play.getPlayersArrayList().get(3).getCardsArray().get(0).toString());
+//		// call checkRound method and print winning player position
+//		System.out.println(play.checkRound());
+//		play.nextRound();
+//		System.out.println(play.getTrump());
+//		System.out.println(play.getPlayersArrayList().get(0).getCardsArray().get(0).toString());
+//		System.out.println(play.getPlayersArrayList().get(1).getCardsArray().get(0).toString());
+//		System.out.println(play.getPlayersArrayList().get(2).getCardsArray().get(0).toString());
+//		System.out.println(play.getPlayersArrayList().get(3).getCardsArray().get(0).toString());
+//		// call checkRound method and print winning player position
+//		System.out.println(play.checkRound());
+		play.deal(); 
+		play.askHuman();
+		play.checkRound();
+		do	 {
+			play.nextRound();
+			play.checkRound();
+			play.removePlayer();
+			if (play.getWinnerOfRound()>=0) {
+				play.setPrevWinRound(play.getWinnerOfRound());
+			}
+		} 
+		while (play.gameWon() == false);
+		System.out.println(play.gameOver());
+		
 	}
-	
 }

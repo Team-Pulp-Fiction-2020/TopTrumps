@@ -4,8 +4,18 @@ public class Player {
 	
 //	attributes of the player class
 	protected String playerStatus;
-	protected int countWins;
+
+	public ArrayList<Card> getCardsArray() {
+		return cardsArray;
+	}
+
+	public void setCardsArray(ArrayList<Card> cardsArray) {
+		this.cardsArray = cardsArray;
+	}
+
+	protected int roundsWons;
 	protected ArrayList<Card> cardsArray = new ArrayList<Card>();
+
 	
 	public Player() {
 		
@@ -15,7 +25,12 @@ public class Player {
 		return playerStatus;
 	}
 
-	public int getCountWins() {
-		return countWins;
+	public int getRoundsWons() {
+		return roundsWons;
 	}
+
+	public void addRound() {
+		roundsWons++;
+	}
+
 }
