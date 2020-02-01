@@ -217,6 +217,7 @@ public class PlayGame {
 		System.out.println("Trumps is :" + getTrump());
 	}
 
+
 	// method that checks who won the last round
 	// if human asks what trump category they want
 	// if ai calls the aiPick method
@@ -356,5 +357,13 @@ public class PlayGame {
 
 	public void setPrevWinRound(int prevWinRound) {
 		this.prevWinRound = prevWinRound;
+	}
+	//toString method to return humans current card
+	public String getCurrentCard() {
+		return playersArrayList.get(0).cardsArray.get(0).toString();
+	}
+	//method returns the number of cards left in human players hand
+	public int sizeOfDeck() {
+	return playersArrayList.get(0).cardsArray.size();
 	}
 }
