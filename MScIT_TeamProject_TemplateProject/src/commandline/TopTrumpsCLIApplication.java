@@ -53,11 +53,13 @@ public class TopTrumpsCLIApplication {
 						System.out.println("How many players are there? (2-5)");
 						if(scanner.nextInt() >= 2 && scanner.nextInt() <= 5) {
 							noPlayers = scanner.nextInt();
+							System.out.println("Game Start");
 							PlayGame play = new PlayGame(noPlayers);
 							while(!play.gameWon())
 								play.deal();
-								System.out.println("Game Start\nRound1\nRound 1:Players have drawn their cards!\n"
-										+ "you drew " + play.getCurrentCard() + "\nThere are " + play.sizeOfDeck() + " in your deck");
+								System.out.println("Round " + play.getNoOfRounds() + "\nRound " + play.getNoOfRounds() + ":Players have drawn their cards!\n"
+										+ "You drew " + play.getCurrentCard() + "\nThere are " + play.sizeOfDeck() + " in your deck");
+								
 								
 								
 						}else System.out.println("Please enter either '1', '2', '3', '4' or '5'");
