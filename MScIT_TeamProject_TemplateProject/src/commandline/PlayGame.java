@@ -209,14 +209,14 @@ public class PlayGame {
 		if (winnerOfRound == -1) {
 			winnerOfRound = prevWinRound;
 		}
-		if (winnerOfRound == 0) {
-			showCard(0);
-			Scanner humanSelect = new Scanner(System.in); // Create a Scanner object
-			System.out.println("Please select your trump category.");
-			setTrump(humanSelect.nextInt()); // Read user input
-		} else {
-			aiPick(playersArrayList.get(winnerOfRound));
-		}
+//		if (winnerOfRound == 0) {
+//			showCard(0);
+//			Scanner humanSelect = new Scanner(System.in); // Create a Scanner object
+//			System.out.println("Please select your trump category.");
+//			setTrump(humanSelect.nextInt()); // Read user input
+//		} else {
+//			aiPick(playersArrayList.get(winnerOfRound));
+//		}
 	}
 
 	// method to see if any players have won the game
@@ -249,9 +249,7 @@ public class PlayGame {
 	}
 
 	// gameOver method which will send all the stats to the database
-
 	public ArrayList<Integer> gameOver() {
-	//can this return an array of ints?
 		// for testing System.out.println("calling gameOver");
 		ArrayList<Integer> statsArray = new ArrayList<Integer>();
 		if (gameWon() == true) {

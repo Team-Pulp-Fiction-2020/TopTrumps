@@ -7,7 +7,6 @@ import java.util.Scanner;
  * Top Trumps command line application
  */
 public class TopTrumpsCLIApplication {
-	private static int gameCounter;
 
 	/**
 	 * This main method is called by TopTrumps.java when the user specifies that they want to run in
@@ -51,12 +50,12 @@ public class TopTrumpsCLIApplication {
 				System.out.println("How many players are there? (2-5)");
 				int noPlayers = scanner.nextInt();
 				while(!(noPlayers < 2) || !(noPlayers > 5)) {
-					System.out.println("Please enter either '1', '2', '3', '4' or '5'");
+					System.out.println("Please enter either '2', '3', '4' or '5'");
 				}
 				System.out.println("Game Start");
 				PlayGame play = new PlayGame(noPlayers);
-				while(!play.gameWon()) {
-					play.deal();
+				play.deal();
+				while(!play.gameWon()==true) {
 					System.out.println("Round " + play.getNoOfRounds() + "\nRound " + play.getNoOfRounds() + ":Players have drawn their cards!\n"
 							+ "You drew " + play.showCard(0) + "\nThere are " + play.showCardSize(0) + " in your deck");
 					if(play.getWinnerOfRound() == 0) {
@@ -68,11 +67,16 @@ public class TopTrumpsCLIApplication {
 							System.out.println("Please enter a number from 1 - 5");
 						}
 						play.setTrump(category);
-						if(play.getWinnerOfRound() == 0) {
+						if(play.getWinnerOfRound() == -1) {
+							play.setWinnerofRound(play.getPrevWinRound());
+							System.out.println("Round" + play.getNoOfRounds() + ": This round was a draw! \nThere are "
+									+ play.getComPile());
+						}
+						else if(play.getWinnerOfRound() == 0) {
 							System.out.println("Round" + play.getNoOfRounds() + ": You won this round!\n"
 									+ "The winning card was:\n" + play.showCard(0));
 						}
-						if(play.getWinnerOfRound() != 0) {
+						else {
 							System.out.println("Round" + play.getNoOfRounds() + ": Player " + (play.getWinnerOfRound() + 1) 
 										+ " has won this round!\n The winning card was:\n" + play.showCard(play.getWinnerOfRound())
 										+ "\n The winning category was: ");
@@ -88,13 +92,19 @@ public class TopTrumpsCLIApplication {
 											System.out.println("Cargo");
 										}
 						}
-						if(play.getWinnerOfRound() == -1) {
-							play.setWinnerofRound(play.getPrevWinRound());
-							System.out.println("Round" + play.getNoOfRounds() + ": This round was a draw! \nThere are "
-									+ play.getComPileSize);
-						}
-					}			
+					}else {
+						//what happens if the winner of last round was AI?
+						play.aiPick(play.getPlayersArrayList().get(play.getWinnerOfRound()));
+					}
+					//update model, checkWin
+					play.checkRound();
+					play.removePlayer();
+					if (play.getWinnerOfRound()>=0) {
+						play.setPrevWinRound(play.getWinnerOfRound());
+					}
 				}	
+				System.out.println("Game over! Player " + (play.getWinnerOfRound()+1) + " has won the game.");
+				play.gameOver();
 			} 
 			userWantsToQuit=true; // use this when the user wants to exit the game
 			
