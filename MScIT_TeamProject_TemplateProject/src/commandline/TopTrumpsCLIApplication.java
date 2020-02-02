@@ -91,7 +91,7 @@ public class TopTrumpsCLIApplication {
 						if(play.getWinnerOfRound() == -1) {
 							play.setWinnerofRound(play.getPrevWinRound());
 							System.out.println("Round" + play.getNoOfRounds() + ": This round was a draw! \nThere are "
-									+ play.getComPileSize);
+									+ play.getComPileSize());
 						}
 					}			
 				}	
