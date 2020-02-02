@@ -58,8 +58,8 @@ public class TopTrumpsCLIApplication {
 							while(!play.gameWon())
 								play.deal();
 								System.out.println("Round " + play.getNoOfRounds() + "\nRound " + play.getNoOfRounds() + ":Players have drawn their cards!\n"
-										+ "You drew " + play.getCurrentCard() + "\nThere are " + play.sizeOfDeck() + " in your deck");
-								
+										+ "You drew " + play.showHumanCard() + "\nThere are " + play.showCardSize(0) + " in your deck");
+									if(play)
 								
 								
 						}else System.out.println("Please enter either '1', '2', '3', '4' or '5'");

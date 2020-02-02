@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class PlayGame {
 	// create attributes
 	private int noOfPlayers;
-	private int noOfRounds=0;
+	private int noOfRounds=1; //Emily changed this to 1, since first round is 1
 	private int noOfDraws=0;
 	private int prevWinRound = 0;
 	private int winnerOfRound;
@@ -267,6 +267,7 @@ public class PlayGame {
 	}
 
 	// gameOver method which will send all the stats to the database
+	//can this return an array of ints?
 	public String gameOver() {
 		// for testing System.out.println("calling gameOver");
 		String gameStats = "";
