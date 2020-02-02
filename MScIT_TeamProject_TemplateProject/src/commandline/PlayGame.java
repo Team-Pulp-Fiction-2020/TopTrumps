@@ -254,12 +254,7 @@ public class PlayGame {
 	}
 
 	// gameOver method which will send all the stats to the database
-<<<<<<< HEAD
-	//can this return an array of ints?
-	public String gameOver() {
-=======
 	public ArrayList<Integer> gameOver() {
->>>>>>> 496643d2ffffae00426d03afe347bc24b386a15f
 		// for testing System.out.println("calling gameOver");
 		ArrayList<Integer> statsArray = new ArrayList<Integer>();
 		if (gameWon() == true) {
