@@ -75,7 +75,7 @@ public class PlayGame {
 
 	public void askHuman() {
 		// ask for player1 trump card and then set to desired category
-		showHumanCard();
+		showCard(0);
 		Scanner humanSelect = new Scanner(System.in); // Create a Scanner object
 		System.out.println("Please select your trump category.");
 		setTrump(humanSelect.nextLine()); // Read user input
@@ -227,7 +227,7 @@ public class PlayGame {
 			winnerOfRound = prevWinRound;
 		}
 		if (winnerOfRound == 0) {
-			showHumanCard();
+			showCard(0);
 			Scanner humanSelect = new Scanner(System.in); // Create a Scanner object
 			System.out.println("Please select your trump category.");
 			setTrump(humanSelect.nextLine()); // Read user input
@@ -256,14 +256,14 @@ public class PlayGame {
 	}
 	
 	// method for printing the human players cards
-	public void showHumanCard() {
-		for (int i = 0; i < noOfPlayers; i++) {
-			if (playersArrayList.get(i).cardsArray.size() == 0)
-				continue;
-			// print all the player cards for testing ****** change back to player 1 only ******
-			System.out.println("Player " + (i + 1) + " : " + playersArrayList.get(i).cardsArray.get(0).toString());
-			System.out.println(playersArrayList.get(i).cardsArray.size());
-		}
+	public String showCard(int i) {
+		String s ="";
+			s = "Player 1 : " + playersArrayList.get(i).cardsArray.get(0).toString();
+		return s;
+	}
+	
+	public int showCardSize(int i) {
+		return playersArrayList.get(i).cardsArray.size();
 	}
 
 	// gameOver method which will send all the stats to the database
