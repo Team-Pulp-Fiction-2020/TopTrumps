@@ -20,4 +20,13 @@ public class ComPile {
 		}
 		return comPileTemp;
 	}
+
+	public int getComPileSize() {
+		return comPile.size();
+	}
+
+	public void setComPile(ArrayList<Card> comPile) {
+		this.comPile = comPile;
+	}
+	
 }

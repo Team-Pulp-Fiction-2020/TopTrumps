@@ -10,8 +10,8 @@ public class PlayGame {
 	private int noOfDraws=0;
 	private int prevWinRound = 0;
 	private int winnerOfRound;
-	private String gameWinner = "";
-	private String trump = "";
+	private int gameWinner;
+	private int trump;
 	private ArrayList<Player> playersArrayList = new ArrayList<Player>();// array of players
 	private static Card[] deck = Card.shipArrayFill(); // deck of cards
 	private ComPile comPile = new ComPile(); // create a class object this will hold communal pile
@@ -73,18 +73,10 @@ public class PlayGame {
 		}
 	}
 
-	public void askHuman() {
-		// ask for player1 trump card and then set to desired category
-		showCard(0);
-		Scanner humanSelect = new Scanner(System.in); // Create a Scanner object
-		System.out.println("Please select your trump category.");
-		setTrump(humanSelect.nextLine()); // Read user input
-	}
 
 	// method to check and return who has won the round
 	public int checkRound() {
 		noOfRounds++;
-		// for testing System.out.println("calling checkRound");
 		int[] trumpsArray = new int[noOfPlayers];
 		winnerOfRound = -1;
 		// loop the number of players
@@ -93,15 +85,15 @@ public class PlayGame {
 			if (playersArrayList.get(i).cardsArray.size() == 0)
 				continue;
 			// add the players trump value to trumpsArray
-			if (getTrump().equals("size")) {
+			if (getTrump()==(0)) {
 				trumpsArray[i] = playersArrayList.get(i).cardsArray.get(0).getSize();
-			} else if (getTrump().equals("speed")) {
+			} else if (getTrump()==(1)) {
 				trumpsArray[i] = playersArrayList.get(i).cardsArray.get(0).getSpeed();
-			} else if (getTrump().equals("range")) {
+			} else if (getTrump()==(2)) {
 				trumpsArray[i] = playersArrayList.get(i).cardsArray.get(0).getRange();
-			} else if (getTrump().equals("firepower")) {
+			} else if (getTrump()==(3)) {
 				trumpsArray[i] = playersArrayList.get(i).cardsArray.get(0).getFirepower();
-			} else if (getTrump().equals("cargo")) {
+			} else if (getTrump()==(4)) {
 				trumpsArray[i] = playersArrayList.get(i).cardsArray.get(0).getCargo();
 			}
 		}
@@ -118,9 +110,6 @@ public class PlayGame {
 			// and call the isDraw method
 			isDraw();
 		} else {
-			// print out the winner of the round
-			System.out.println("\n Player " + (highPos + 1) + " has won the round with the following card:\n"
-					+ playersArrayList.get(highPos).getCardsArray().get(0).toString() + "\n");
 			// add all cards in the round to the winners pile
 			playersArrayList.get(highPos).cardsArray.addAll(cardsWon());
 			// give winner any cards in the comPile
@@ -130,6 +119,7 @@ public class PlayGame {
 		}
 		return winnerOfRound;
 	}
+	
 
 	// method that returns the number of times a number appears in an array
 	public int countValue(int[] values, int num) {
@@ -168,7 +158,6 @@ public class PlayGame {
 	// and then delete them from the players array
 	// returning the new array of cards
 	public ArrayList<Card> cardsWon() {
-		// for testing System.out.println("calling cardsWon");
 		ArrayList<Card> cardsPlayed = new ArrayList<Card>();
 		for (int i = 0; i < noOfPlayers; i++) {
 			if (playersArrayList.get(i).cardsArray.size() == 0)
@@ -181,40 +170,32 @@ public class PlayGame {
 
 	// method that when called removes all players top card
 	// and adds them to the communal pile
-	public void isDraw() {
-		// for testing System.out.println("calling isDraw");
-		System.out.println("The round was a draw.");
+	public boolean isDraw() {
+		boolean draw = true;
 		// call the cardsWon method adding them to the comPile
 		comPile.addCards(cardsWon()); // removes players cards and returns them
 		noOfDraws++;
 		nextRound();
+		return draw;
 	}
 
 	// method for an ai player to select their highest value
 	// category and set it as trump via calling setTrump method
 	public void aiPick(Player p) {
-		// for testing System.out.println("calling aiPick");
 		int[] topCat = new int[] { p.cardsArray.get(0).getSize(), p.cardsArray.get(0).getSpeed(),
 				p.cardsArray.get(0).getRange(), p.cardsArray.get(0).getFirepower(), p.cardsArray.get(0).getCargo(), };
 		// set trump to the highest value
 		if (maxNumPos(topCat) == 0) {
-			setTrump("size");
+			setTrump(0);
 		} else if (maxNumPos(topCat) == 1) {
-			setTrump("speed");
+			setTrump(1);
 		} else if (maxNumPos(topCat) == 2) {
-			setTrump("range");
+			setTrump(2);
 		} else if (maxNumPos(topCat) == 3) {
-			setTrump("firepower");
+			setTrump(3);
 		} else if (maxNumPos(topCat) == 4) {
-			setTrump("cargo");
+			setTrump(4);
 		}
-		for (int i = 0; i < noOfPlayers; i++) {
-			if (playersArrayList.get(i).cardsArray.size() == 0)
-				continue;
-			System.out.println(playersArrayList.get(i).cardsArray.get(0).toString());
-			System.out.println(playersArrayList.get(i).cardsArray.size());
-		}
-		System.out.println("Trumps is :" + getTrump());
 	}
 
 
@@ -222,7 +203,6 @@ public class PlayGame {
 	// if human asks what trump category they want
 	// if ai calls the aiPick method
 	public void nextRound() {
-		// for testing System.out.println("calling nextRound");
 		if (winnerOfRound == -1) {
 			winnerOfRound = prevWinRound;
 		}
@@ -230,7 +210,7 @@ public class PlayGame {
 			showCard(0);
 			Scanner humanSelect = new Scanner(System.in); // Create a Scanner object
 			System.out.println("Please select your trump category.");
-			setTrump(humanSelect.nextLine()); // Read user input
+			setTrump(humanSelect.nextInt()); // Read user input
 		} else {
 			aiPick(playersArrayList.get(winnerOfRound));
 		}
@@ -246,8 +226,7 @@ public class PlayGame {
 			// if any player has all 40 cards
 			if (playersArrayList.get(i).cardsArray.size() == 40) {
 				// they have won the game
-				System.out.println(gameWinner = "Game Over! Player " + (i + 1) + " has won the game!");
-				setGameWinner("Player "+(i+1));
+				setGameWinner((i+1));
 				win = true;
 				break;
 			}
@@ -255,6 +234,14 @@ public class PlayGame {
 		return win;
 	}
 	
+	public int getComPile() {
+		return comPile.getComPileSize();
+	}
+
+	public void setComPile(ComPile comPile) {
+		this.comPile = comPile;
+	}
+
 	// method for printing the human players cards
 	public String showCard(int i) {
 		String s ="";
@@ -267,17 +254,23 @@ public class PlayGame {
 	}
 
 	// gameOver method which will send all the stats to the database
+<<<<<<< HEAD
 	//can this return an array of ints?
 	public String gameOver() {
+=======
+	public ArrayList<Integer> gameOver() {
+>>>>>>> 496643d2ffffae00426d03afe347bc24b386a15f
 		// for testing System.out.println("calling gameOver");
-		String gameStats = "";
+		ArrayList<Integer> statsArray = new ArrayList<Integer>();
 		if (gameWon() == true) {
-			gameStats = noOfDraws + " , " + gameWinner + " , " + noOfRounds;
+			statsArray.add(noOfDraws);
+			statsArray.add(gameWinner);
+			statsArray.add(noOfRounds);
 			for (int i = 0; i < noOfPlayers; i++) {
-				gameStats += " , "+playersArrayList.get(i).getRoundsWons();
+				statsArray.add(playersArrayList.get(i).getRoundsWons());
 			}
 		}
-		return gameStats;
+		return statsArray;
 	}
 
 	// method to remove players from the game
@@ -336,19 +329,19 @@ public class PlayGame {
 		this.winnerOfRound = winnerOfRound;
 	}
 
-	public String getGameWinner() {
+	public int getGameWinner() {
 		return gameWinner;
 	}
 
-	public void setGameWinner(String gameWinner) {
+	public void setGameWinner(int gameWinner) {
 		this.gameWinner = gameWinner;
 	}
 
-	public String getTrump() {
+	public int getTrump() {
 		return trump;
 	}
 
-	public void setTrump(String trump) {
+	public void setTrump(int trump) {
 		this.trump = trump;
 	}
 
