@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class PlayGame {
 	// create attributes
 	private int noOfPlayers;
-	private int noOfRounds=0;
+	private int noOfRounds=1; //Emily changed this to 1, since first round is 1
 	private int noOfDraws=0;
 	private int prevWinRound = 0;
 	private int winnerOfRound;
@@ -76,7 +76,7 @@ public class PlayGame {
 
 	// method to check and return who has won the round
 	public int checkRound() {
-		noOfRounds++;
+		
 		int[] trumpsArray = new int[noOfPlayers];
 		winnerOfRound = -1;
 		// loop the number of players
@@ -178,6 +178,8 @@ public class PlayGame {
 		nextRound();
 		return draw;
 	}
+	
+	
 
 	// method for an ai player to select their highest value
 	// category and set it as trump via calling setTrump method
@@ -203,6 +205,7 @@ public class PlayGame {
 	// if human asks what trump category they want
 	// if ai calls the aiPick method
 	public void nextRound() {
+		noOfRounds++;
 		if (winnerOfRound == -1) {
 			winnerOfRound = prevWinRound;
 		}
@@ -234,14 +237,6 @@ public class PlayGame {
 		return win;
 	}
 	
-	public int getComPile() {
-		return comPile.getComPileSize();
-	}
-
-	public void setComPile(ComPile comPile) {
-		this.comPile = comPile;
-	}
-
 	// method for printing the human players cards
 	public String showCard(int i) {
 		String s ="";
@@ -254,7 +249,9 @@ public class PlayGame {
 	}
 
 	// gameOver method which will send all the stats to the database
+
 	public ArrayList<Integer> gameOver() {
+	//can this return an array of ints?
 		// for testing System.out.println("calling gameOver");
 		ArrayList<Integer> statsArray = new ArrayList<Integer>();
 		if (gameWon() == true) {
@@ -355,4 +352,12 @@ public class PlayGame {
 	public int sizeOfDeck() {
 	return playersArrayList.get(0).cardsArray.size();
 	}
+	public int getComPile() {
+		return comPile.getComPileSize();
+	}
+
+	public void setComPile(ComPile comPile) {
+		this.comPile = comPile;
+	}
+
 }
