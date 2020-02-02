@@ -7,7 +7,6 @@ import java.util.Scanner;
  * Top Trumps command line application
  */
 public class TopTrumpsCLIApplication {
-	private static int gameCounter;
 
 	/**
 	 * This main method is called by TopTrumps.java when the user specifies that they want to run in
@@ -68,11 +67,16 @@ public class TopTrumpsCLIApplication {
 							System.out.println("Please enter a number from 1 - 5");
 						}
 						play.setTrump(category);
-						if(play.getWinnerOfRound() == 0) {
+						if(play.getWinnerOfRound() == -1) {
+							play.setWinnerofRound(play.getPrevWinRound());
+							System.out.println("Round" + play.getNoOfRounds() + ": This round was a draw! \nThere are "
+									+ play.getComPile());
+						}
+						else if(play.getWinnerOfRound() == 0) {
 							System.out.println("Round" + play.getNoOfRounds() + ": You won this round!\n"
 									+ "The winning card was:\n" + play.showCard(0));
 						}
-						if(play.getWinnerOfRound() != 0) {
+						else {
 							System.out.println("Round" + play.getNoOfRounds() + ": Player " + (play.getWinnerOfRound() + 1) 
 										+ " has won this round!\n The winning card was:\n" + play.showCard(play.getWinnerOfRound())
 										+ "\n The winning category was: ");
@@ -88,12 +92,10 @@ public class TopTrumpsCLIApplication {
 											System.out.println("Cargo");
 										}
 						}
-						if(play.getWinnerOfRound() == -1) {
-							play.setWinnerofRound(play.getPrevWinRound());
-							System.out.println("Round" + play.getNoOfRounds() + ": This round was a draw! \nThere are "
-									+ play.getComPileSize());
-						}
-					}			
+					}else {
+						//what happens if the winner of last round was AI?
+					}
+					//update model, checkWin
 				}	
 			} 
 			userWantsToQuit=true; // use this when the user wants to exit the game
