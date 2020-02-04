@@ -1,4 +1,3 @@
-package commandline;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -75,7 +74,7 @@ public class Card {
 	}
 	// ToString to format and print the array
 	public String toString() {
-		return "Name: " + name + "\n Size: " + size + "\n Speed: " + speed + "\n Range: " + range + "\n Firepower: " +  firepower + "\n Cargo: " + cargo;
+		return "Name: " + name + "\nSize: " + size + "\nSpeed: " + speed + "\nRange: " + range + "\nFirepower: " +  firepower + "\nCargo: " + cargo;
 		
 	}
 	// Global variables
