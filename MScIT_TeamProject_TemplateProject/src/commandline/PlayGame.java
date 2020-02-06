@@ -13,11 +13,14 @@ public class PlayGame {
 	private int winnerOfRound = 0;
 	private int gameWinner;
 	private int trump;
+	private int highPos;
+	private int highVal;
 	private ArrayList<Player> playersArrayList = new ArrayList<Player>();// array of players
 	private static Card[] deck = Card.shipArrayFill(); // deck of cards
 	private ComPile comPile = new ComPile(); // create a class object this will hold communal pile
 	// array to hold categories
 	ArrayList<Integer> statsArray = new ArrayList<Integer>();
+
 
 	// method that takes in the number of players
 	// and creates a player object for each one
@@ -38,8 +41,8 @@ public class PlayGame {
 			// generate a random number from the length of the array
 			int randomPosition = rgen.nextInt(array.length);
 			Card temp = array[i]; // put the current pos i into a temp card
-			array[i] = array[randomPosition]; // add a random card from the array to pos i
-			array[randomPosition] = temp;// add temp value to the ranPos
+			array[i] = array[randomPosition]; //add a random card from the array to pos i
+			array[randomPosition] = temp;//add temp value to the ranPos
 			// set deck to the new reordered array
 			deck = array;
 		}
@@ -70,71 +73,84 @@ public class PlayGame {
 			}
 		}
 	}
-
+	
 	// method that returns the number of times a number appears in an array
-	public int countValue(int[] values, int num) {
-		int count = 0;
-		for (int i = 0; i < values.length; i++) {
-			if (values[i] == num) {
-				count++;
+		public int countValue(int[] values, int num) {
+			int count = 0;
+			for (int i = 0; i < values.length; i++) {
+				if (values[i] == num) {
+					count++;
+				}
 			}
+			return count;
 		}
-		return count;
-	}
 
-	// method that returns the position of the largest
-	// value in an int Array
-	public int maxNumPos(int[] array) {
-		int largest = 0;
-		for (int i = 1; i < array.length; i++) {
-			if (array[i] > array[largest])
-				largest = i;
+		// method that returns the position of the largest
+		// value in an int Array
+		public int maxNumPos(int[] array) {
+			int largest = 0;
+			for (int i = 1; i < array.length; i++) {
+				if (array[i] > array[largest])
+					largest = i;
+			}
+			return largest; // position of the first largest found
 		}
-		return largest; // position of the first largest found
-	}
 
-	// method that returns the highest
-	// value in an array of ints
-	public int maxNum(int[] array) {
-		int largest = 0;
-		for (int i = 1; i < array.length; i++) {
-			if (array[i] > array[largest])
-				largest = i;
+		// method that returns the highest
+		// value in an array of ints
+		public int maxNum(int[] array) {
+			int largest = 0;
+			for (int i = 1; i < array.length; i++) {
+				if (array[i] > array[largest])
+					largest = i;
+			}
+			return array[largest]; // highest value
 		}
-		return array[largest]; // highest value
-	}
 
-	// method to add all the players top card to an ArrayList
-	// and then delete them from the players array
-	// calls the shuffle method and then
-	// returns the new array of cards
-	public ArrayList<Card> cardsWon() {
-		// for testing System.out.println("calling cardsWon");
-		ArrayList<Card> cardsPlayed = new ArrayList<Card>();
-		for (int i = 0; i < noOfPlayers; i++) {
-			// if the player has no cards skip them
-			if (playersArrayList.get(i).cardsArray.size() == 0)
-				continue;
-			// else add there card to the cardsPlayed arrayList
-			cardsPlayed.add(playersArrayList.get(i).cardsArray.get(0));
-			// then remove it from there hand
-			playersArrayList.get(i).cardsArray.remove(0);
-			// call shuffle methd to reorder the cards
+		
+		//method to add cards to the winners pile
+		//from other players and the comPile
+		public void cardsRound() {
+			playersArrayList.get(highPos).cardsArray.addAll(cardsWon());
+			// give winner any cards in the comPile by calling the removeCards method
+			playersArrayList.get(highPos).cardsArray.addAll(comPile.removeCards());
+			winnerOfRound = highPos; // update the winnerOfRound var
+			playersArrayList.get(winnerOfRound).addRound();// call the addRound method to increments the players winRound attribute
 		}
-		return cardsPlayed;
-	}
+		
+		
+		
+		// method to add all the players top card to an ArrayList
+		// and then delete them from the players array
+		// calls the shuffle method and then
+		// returns the new array of cards
+		public ArrayList<Card> cardsWon() {
+			// for testing System.out.println("calling cardsWon");
+			ArrayList<Card> cardsPlayed = new ArrayList<Card>();
+			for (int i = 0; i < noOfPlayers; i++) {
+				// if the player has no cards skip them
+				if (playersArrayList.get(i).cardsArray.size() == 0)
+					continue;
+				// else add there card to the cardsPlayed arrayList
+				cardsPlayed.add(playersArrayList.get(i).cardsArray.get(0));
+				// then remove it from there hand
+				playersArrayList.get(i).cardsArray.remove(0);
+				// call shuffle methd to reorder the cards
+			}
+			return cardsPlayed;
+		}
 
-	// method that when called removes all players top card
-	// and adds them to the communal pile
-	public void isDraw() {
-		// for testing System.out.println("calling isDraw");
-		System.out.println("The round was a draw.");
-		// call the cardsWon method adding them to the comPile
-		comPile.addCards(cardsWon()); // removes players cards and returns them
-		noOfDraws++;
-		// nextRound();
-	}
-
+		// method that when called removes all players top card
+		// and adds them to the communal pile
+		public void isDraw() {
+			// for testing System.out.println("calling isDraw");
+			System.out.println("The round was a draw.");
+			// call the cardsWon method adding them to the comPile
+			comPile.addCards(cardsWon()); // removes players cards and returns them
+			noOfDraws++;
+			// nextRound();
+		}
+		
 	// method to check and return who has won the round
 	// calls on various other methods to achieve this
 	public int checkRound() {
@@ -161,28 +177,21 @@ public class PlayGame {
 		}
 		// find the first highest number position in the array
 		// by calling the maxNumPos method
-		int highPos = maxNumPos(trumpsArray);
+		highPos = maxNumPos(trumpsArray);
 		// find the highest value in the array
 		// by calling the maxNum method
-		int highVal = maxNum(trumpsArray);
+		highVal = maxNum(trumpsArray);
 		// call the countValue method to see if it's a draw
 		if (countValue(trumpsArray, highVal) >= 2) {
 			// if it is set winner to position -1
 			winnerOfRound = -1;
 			// and call the isDraw method
 			isDraw();
-		} else {
-			// add all cards in the round to the winners pile
-			// by calling the cardsWon method
-			playersArrayList.get(highPos).cardsArray.addAll(cardsWon());
-			// give winner any cards in the comPile by calling the removeCards method
-			playersArrayList.get(highPos).cardsArray.addAll(comPile.removeCards());
-			winnerOfRound = highPos; // update the winnerOfRound var
-			playersArrayList.get(winnerOfRound).addRound();// call the addRound method to increments the players
-															// winRound attribute
-		}
+		} 
 		return winnerOfRound;
 	}
+
+	
 
 	// method for an ai player to select their highest value
 	// category and set it as trump via calling setTrump method
@@ -204,6 +213,8 @@ public class PlayGame {
 			setTrump(4);
 		}
 	}
+
+	
 
 	// method to check if any players have won the game
 	public boolean gameWon() {
@@ -238,6 +249,8 @@ public class PlayGame {
 		}
 		return statsArray;
 	}
+
+	
 
 	// getters and setters for attributes
 	public ArrayList<Player> getPlayersArrayList() {
@@ -307,7 +320,6 @@ public class PlayGame {
 	public int getComPile() {
 		return comPile.getComPileSize();
 	}
-
 	public static Card[] getDeck() {
 		return deck;
 	}

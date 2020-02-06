@@ -65,7 +65,8 @@ public class Controller {
 				view.printTrumps();
 			}
 			view.play.checkRound();// check to see who has won
-			view.printWinnerorRound();
+			view.printWinnerOfRound();
+			view.play.cardsRound();
 			if (view.play.getWinnerOfRound() >= 0) { // if the last round was not a draw
 				view.play.setPrevWinRound(view.play.getWinnerOfRound());// set knew previous winner to winner
 			}

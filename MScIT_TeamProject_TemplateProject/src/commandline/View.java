@@ -33,7 +33,7 @@ public class View {
 		System.out.println("\nPlease select a category:\n1. Size\n2. Speed\n3. Range\n4. Firepower\n5. Cargo");
 	}
 
-	public void printWinnerorRound() { // prints the winner of the round
+	public void printWinnerOfRound() { // prints the winner of the round
 		if (!(play.getWinnerOfRound()==-1)) {
 		System.out.println("\nPlayer " + (play.getWinnerOfRound() + 1) + " has won the round with the following card:\n"
 				+ play.getPlayersArrayList().get(play.getWinnerOfRound()).getCardsArray().get(0).toString() + "\n");
