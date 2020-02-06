@@ -41,6 +41,9 @@ public class TopTrumpsView {
 				+ "\n\t\t1: Size\n\t\t2: Speed\n\t\t3: Range\n\t\t4: Firepower\n\t\t5: Cargo"
 				+ "\nPlease enter the number of your chosen category: ");
 	}
+	public void AIChooseCat() {
+		System.out.println("Trumps is :" + (model.getTrump() + 1));
+	}
 	public void draw() {
 		System.out.println("This round was a draw! \nThere are "
 				+ model.getComPile() + " cards in the common pile.");
@@ -65,5 +68,10 @@ public class TopTrumpsView {
 				}else if(model.getTrump() == 4) {
 					System.out.println("Cargo");
 				}
+	}
+	public void gameWon() {
+		model.gameWon();
+		System.out.println("\t\tGame Over!\n" + "The winner of this game is " 
+				+ model.getGameWinner() + "!!");
 	}
 }

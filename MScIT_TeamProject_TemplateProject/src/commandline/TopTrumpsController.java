@@ -20,7 +20,7 @@ public class TopTrumpsController {
 		playerInput = 0;
 		noPlayers = 0;
 		category = 0;
-		
+
 		view.choosePlayOrStats();
 		playerInput = scanner.nextInt();
 		while (!(playerInput == 1) && !(playerInput == 2)) {
@@ -42,32 +42,33 @@ public class TopTrumpsController {
 			while (!model.gameWon()) {
 				model.deal();
 				view.playRound();
-				if(model.getWinnerOfRound() == 0) {
+				if (model.getWinnerOfRound() == 0) {
 					view.humanChooseCat();
 					category = scanner.nextInt();
-					while(!(category>=1) && !(category<=5)) {
+					while (!(category >= 1) && !(category <= 5)) {
 						view.checkInput();
 						category = scanner.nextInt();
 					}
 					model.setTrump(category);
 				}
+
+				else {
+					model.aiPick(model.getPlayersArrayList().get(model.getWinnerOfRound()));
+					view.AIChooseCat();
+				}
+				model.checkRound();
+				if (model.getWinnerOfRound() == -1) {
+					view.draw();
+					model.setWinnerofRound(model.getPrevWinRound());
+				} else if (model.getWinnerOfRound() == 0) {
+					view.humanWin();
+					model.setPrevWinRound(model.getWinnerOfRound());
+				} else {
+					view.AIWin();
+					model.setPrevWinRound(model.getWinnerOfRound());
+				}
 			}
-		}
-		else {
-			model.aiPick(model.getPlayersArrayList().get(model.getWinnerOfRound()));
-		}
-		model.checkRound();
-		if(model.getWinnerOfRound() == -1) {
-			view.draw();
-			model.setWinnerofRound(model.getPrevWinRound());
-		}
-		else if(model.getWinnerOfRound() == 0) {
-			view.humanWin();
-			model.setPrevWinRound(model.getWinnerOfRound());
-		}
-		else {
-			view.AIWin();
-			model.setPrevWinRound(model.getWinnerOfRound());
+			view.gameWon();
 		}
 	}
 }
