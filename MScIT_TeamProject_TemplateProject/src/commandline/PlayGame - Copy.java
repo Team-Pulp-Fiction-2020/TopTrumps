@@ -1,11 +1,9 @@
-package commandline;
-
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
 public class PlayGame {
-	// attributes
+	// create attributes
 	private int noOfPlayers;
 	private int noOfRounds = 1;
 	private int noOfDraws = 0;
@@ -16,16 +14,20 @@ public class PlayGame {
 	private ArrayList<Player> playersArrayList = new ArrayList<Player>();// array of players
 	private static Card[] deck = Card.shipArrayFill(); // deck of cards
 	private ComPile comPile = new ComPile(); // create a class object this will hold communal pile
+	// values for trump categories
 	// array to hold categories
 	ArrayList<Integer> statsArray = new ArrayList<Integer>();
 
-	// method that takes in the number of players
-	// and creates a player object for each one
-	public void setPlayers(int noOfPlayers) {
-		setNoOfPlayers(noOfPlayers); // set global var to local
-		for (int i = noOfPlayers; i > 0; i--) { // loop the player
-			Player p = new Player(); // create object
-			playersArrayList.add(p); // add them to the plyersArrayList
+	// Constructor that passes in the number of players
+	// and creates a Player object for each of them
+	public PlayGame(int noOfPlayers) {
+		// set global variable to local
+		this.noOfPlayers = noOfPlayers;
+		// create the same amount of Player objects as noOfPlayers
+		for (int i = noOfPlayers; i > 0; i--) {
+			Player p = new Player();
+			// add them to the plyersArrayList
+			playersArrayList.add(p);
 		}
 	}
 
@@ -37,9 +39,9 @@ public class PlayGame {
 		for (int i = 0; i < array.length; i++) {
 			// generate a random number from the length of the array
 			int randomPosition = rgen.nextInt(array.length);
-			Card temp = array[i]; // put the current pos i into a temp card
-			array[i] = array[randomPosition]; // add a random card from the array to pos i
-			array[randomPosition] = temp;// add temp value to the ranPos
+			Card temp = array[i];
+			array[i] = array[randomPosition];
+			array[randomPosition] = temp;
 			// set deck to the new reordered array
 			deck = array;
 		}
@@ -69,6 +71,59 @@ public class PlayGame {
 				cardCount++;
 			}
 		}
+	}
+
+	// method to check and return who has won the round
+	public int checkRound() {
+		// for testing System.out.println("calling checkRound");
+		int[] trumpsArray = new int[noOfPlayers];
+		// winnerOfRound = -1;
+		// loop the number of players
+		for (int i = 0; i < getNoOfPlayers(); i++) {
+			// skip player if they have no cards left
+			if (playersArrayList.get(i).cardsArray.size() == 0)
+				continue;
+			// add the players trump value to trumpsArray
+			if (getTrump() == 0) {
+				trumpsArray[i] = playersArrayList.get(i).cardsArray.get(0).getSize();
+			} else if (getTrump() == 1) {
+				trumpsArray[i] = playersArrayList.get(i).cardsArray.get(0).getSpeed();
+			} else if (getTrump() == 2) {
+				trumpsArray[i] = playersArrayList.get(i).cardsArray.get(0).getRange();
+			} else if (getTrump() == 3) {
+				trumpsArray[i] = playersArrayList.get(i).cardsArray.get(0).getFirepower();
+			} else if (getTrump() == 4) {
+				trumpsArray[i] = playersArrayList.get(i).cardsArray.get(0).getCargo();
+			}
+		}
+		// find the first highest number position in the array
+		// by calling the maxNumPos method
+		int highPos = maxNumPos(trumpsArray);
+		// find the highest value in the array
+		// by calling the maxNum method
+		int highVal = maxNum(trumpsArray);
+//		System.out.print(highVal);
+//		System.out.print(highPos);
+
+		// call the countValue method to see if it's a draw
+		if (countValue(trumpsArray, highVal) >= 2) {
+			// if it is set winner to position -1
+			winnerOfRound = -1;
+			// and call the isDraw method
+			isDraw();
+		} else {
+			// print out the winner of the round
+			System.out.println("\nPlayer " + (highPos + 1) + " has won the round with the following card:\n"
+					+ playersArrayList.get(highPos).getCardsArray().get(0).toString() + "\n");
+			// add all cards in the round to the winners pile
+			playersArrayList.get(highPos).cardsArray.addAll(cardsWon());
+			// give winner any cards in the comPile
+			playersArrayList.get(highPos).cardsArray.addAll(comPile.removeCards());
+			winnerOfRound = highPos;
+			playersArrayList.get(winnerOfRound).addRound();
+		}
+		noOfRounds++;
+		return winnerOfRound;
 	}
 
 	// method that returns the number of times a number appears in an array
@@ -106,20 +161,15 @@ public class PlayGame {
 
 	// method to add all the players top card to an ArrayList
 	// and then delete them from the players array
-	// calls the shuffle method and then
-	// returns the new array of cards
+	// returning the new array of cards
 	public ArrayList<Card> cardsWon() {
 		// for testing System.out.println("calling cardsWon");
 		ArrayList<Card> cardsPlayed = new ArrayList<Card>();
 		for (int i = 0; i < noOfPlayers; i++) {
-			// if the player has no cards skip them
 			if (playersArrayList.get(i).cardsArray.size() == 0)
 				continue;
-			// else add there card to the cardsPlayed arrayList
 			cardsPlayed.add(playersArrayList.get(i).cardsArray.get(0));
-			// then remove it from there hand
 			playersArrayList.get(i).cardsArray.remove(0);
-			// call shuffle methd to reorder the cards
 		}
 		return cardsPlayed;
 	}
@@ -135,63 +185,13 @@ public class PlayGame {
 		// nextRound();
 	}
 
-	// method to check and return who has won the round
-	// calls on various other methods to achieve this
-	public int checkRound() {
-		// for testing System.out.println("calling checkRound");
-		int[] trumpsArray = new int[noOfPlayers];
-		// loop the number of players
-		for (int i = 0; i < getNoOfPlayers(); i++) {
-			// skip player if they have no cards left
-			if (playersArrayList.get(i).cardsArray.size() == 0)
-				continue;
-			// add the players trump value to trumpsArray
-			// by calling the getters on the card class
-			if (getTrump() == 0) {
-				trumpsArray[i] = playersArrayList.get(i).cardsArray.get(0).getSize();
-			} else if (getTrump() == 1) {
-				trumpsArray[i] = playersArrayList.get(i).cardsArray.get(0).getSpeed();
-			} else if (getTrump() == 2) {
-				trumpsArray[i] = playersArrayList.get(i).cardsArray.get(0).getRange();
-			} else if (getTrump() == 3) {
-				trumpsArray[i] = playersArrayList.get(i).cardsArray.get(0).getFirepower();
-			} else if (getTrump() == 4) {
-				trumpsArray[i] = playersArrayList.get(i).cardsArray.get(0).getCargo();
-			}
-		}
-		// find the first highest number position in the array
-		// by calling the maxNumPos method
-		int highPos = maxNumPos(trumpsArray);
-		// find the highest value in the array
-		// by calling the maxNum method
-		int highVal = maxNum(trumpsArray);
-		// call the countValue method to see if it's a draw
-		if (countValue(trumpsArray, highVal) >= 2) {
-			// if it is set winner to position -1
-			winnerOfRound = -1;
-			// and call the isDraw method
-			isDraw();
-		} else {
-			// add all cards in the round to the winners pile
-			// by calling the cardsWon method
-			playersArrayList.get(highPos).cardsArray.addAll(cardsWon());
-			// give winner any cards in the comPile by calling the removeCards method
-			playersArrayList.get(highPos).cardsArray.addAll(comPile.removeCards());
-			winnerOfRound = highPos; // update the winnerOfRound var
-			playersArrayList.get(winnerOfRound).addRound();// call the addRound method to increments the players
-															// winRound attribute
-		}
-		return winnerOfRound;
-	}
-
 	// method for an ai player to select their highest value
 	// category and set it as trump via calling setTrump method
 	public void aiPick(Player p) {
 		// for testing System.out.println("calling aiPick");
-		// add all their caregories values to an array
 		int[] topCat = new int[] { p.cardsArray.get(0).getSize(), p.cardsArray.get(0).getSpeed(),
 				p.cardsArray.get(0).getRange(), p.cardsArray.get(0).getFirepower(), p.cardsArray.get(0).getCargo(), };
-		// set trump to the highest value position in the array
+		// set trump to the highest value
 		if (maxNumPos(topCat) == 0) {
 			setTrump(0);
 		} else if (maxNumPos(topCat) == 1) {
@@ -203,9 +203,38 @@ public class PlayGame {
 		} else if (maxNumPos(topCat) == 4) {
 			setTrump(4);
 		}
+//		for (int i = 0; i < noOfPlayers; i++) {
+//			if (playersArrayList.get(i).cardsArray.size() == 0)
+//				continue;
+//			System.out.println(playersArrayList.get(i).cardsArray.get(0).toString());
+//			System.out.println(playersArrayList.get(i).cardsArray.size());
+//		}
+		System.out.println("Trumps is :" + (getTrump() + 1));
 	}
 
-	// method to check if any players have won the game
+	// method that checks who won the last round
+	// if human asks what trump category they want
+	// if ai calls the aiPick method
+//	public void nextRound() {
+//		// for testing System.out.println("calling nextRound");
+//		if (winnerOfRound == -1) {
+//			winnerOfRound = prevWinRound;
+//		}
+//		if (winnerOfRound == 0) {
+//			showCard();
+//			//askHuman();
+////			Scanner humanSelect = new Scanner(System.in); // Create a Scanner object
+////			System.out.println("Please select your trump category.");
+////			setTrump(humanSelect.nextInt()-1); // Read user input
+////			//checkRound();
+////			System.out.println("nextRound scanner");
+//		} else {
+//			aiPick(playersArrayList.get(winnerOfRound));
+//		}
+//		noOfRounds++;
+//	}
+
+	// method to see if any players have won the game
 	public boolean gameWon() {
 		// for testing System.out.println("calling gameWon");
 		// set win to false initially
@@ -221,6 +250,25 @@ public class PlayGame {
 			}
 		}
 		return win;
+	}
+
+	public String showCard() {
+		
+//		 for (int i = 0; i < noOfPlayers; i++) {
+//		if (playersArrayList.get(0).cardsArray.size() == 0)// if player 0 has no cards left
+//		{
+//			
+//		} else {
+		String	s = "\nPlayer 1 : " + playersArrayList.get(0).cardsArray.get(0).toString() + "\nYou have "
+					+ playersArrayList.get(0).cardsArray.size()+" cards left in your deck.";
+//		}
+		// print all the player cards for testing ****** change back to player 1 only
+		// ******
+//			s +="\nPlayer " + (i + 1) + " : " + playersArrayList.get(i).cardsArray.get(0).toString() + "\nCards left:" +
+//			playersArrayList.get(i).cardsArray.size();
+
+		// }
+		return s;
 	}
 
 	// gameOver method which will send all the stats to the database
@@ -239,6 +287,8 @@ public class PlayGame {
 		return statsArray;
 	}
 
+	
+
 	// getters and setters for attributes
 	public ArrayList<Player> getPlayersArrayList() {
 		return playersArrayList;
@@ -252,7 +302,7 @@ public class PlayGame {
 		return noOfPlayers;
 	}
 
-	public void setNoOfPlayers(int noOfPlayers) {
+	private void setNoOfPlayers(int noOfPlayers) {
 		this.noOfPlayers = noOfPlayers;
 	}
 
@@ -260,8 +310,8 @@ public class PlayGame {
 		return noOfRounds;
 	}
 
-	public void addNoOfRounds() {
-		noOfRounds++;
+	public void setNoOfRounds(int noOfRounds) {
+		this.noOfRounds = noOfRounds;
 	}
 
 	public int getNoOfDraws() {
@@ -302,17 +352,5 @@ public class PlayGame {
 
 	public void setPrevWinRound(int prevWinRound) {
 		this.prevWinRound = prevWinRound;
-	}
-
-	public int getComPile() {
-		return comPile.getComPileSize();
-	}
-
-	public static Card[] getDeck() {
-		return deck;
-	}
-
-	public static void setDeck(Card[] deck) {
-		PlayGame.deck = deck;
 	}
 }
