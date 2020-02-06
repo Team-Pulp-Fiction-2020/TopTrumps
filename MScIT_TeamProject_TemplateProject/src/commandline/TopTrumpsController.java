@@ -18,8 +18,6 @@ public class TopTrumpsController {
 	public void play() throws SQLException {
 		Scanner scanner = new Scanner(System.in);
 		playerInput = 0;
-		noPlayers = 0;
-		category = 0;
 
 		view.choosePlayOrStats();
 		playerInput = scanner.nextInt();
@@ -31,6 +29,7 @@ public class TopTrumpsController {
 			view.printStats();
 		}
 		if (playerInput == 2) {
+			noPlayers = 0;
 			view.choosePlayers();
 			noPlayers = scanner.nextInt();
 			while (!(noPlayers >= 2) && !(noPlayers <= 5)) {
@@ -43,6 +42,7 @@ public class TopTrumpsController {
 				model.deal();
 				view.playRound();
 				if (model.getWinnerOfRound() == 0) {
+					category = 0;
 					view.humanChooseCat();
 					category = scanner.nextInt();
 					while (!(category >= 1) && !(category <= 5)) {
