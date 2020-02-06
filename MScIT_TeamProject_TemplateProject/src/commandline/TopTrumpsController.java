@@ -6,6 +6,9 @@ import java.util.Scanner;
 public class TopTrumpsController {
 	private TopTrumpsModel model;
 	private TopTrumpsView view;
+	private int playerInput;
+	private int noPlayers;
+	private int category;
 
 	public TopTrumpsController(TopTrumpsModel model) {
 		this.model = model;
@@ -14,10 +17,12 @@ public class TopTrumpsController {
 
 	public void play() throws SQLException {
 		Scanner scanner = new Scanner(System.in);
-		int noPlayers = 0;
+		playerInput = 0;
+		noPlayers = 0;
+		category = 0;
 		
 		view.choosePlayOrStats();
-		int playerInput = scanner.nextInt();
+		playerInput = scanner.nextInt();
 		while (!(playerInput == 1) && !(playerInput == 2)) {
 			view.checkInput();
 			playerInput = scanner.nextInt();
@@ -39,7 +44,7 @@ public class TopTrumpsController {
 				view.playRound();
 				if(model.getWinnerOfRound() == 0) {
 					view.humanChooseCat();
-					int category = scanner.nextInt();
+					category = scanner.nextInt();
 					while(!(category>=1) && !(category<=5)) {
 						view.checkInput();
 						category = scanner.nextInt();
