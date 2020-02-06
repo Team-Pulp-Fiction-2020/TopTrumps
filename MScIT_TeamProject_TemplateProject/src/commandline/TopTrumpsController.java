@@ -12,7 +12,7 @@ public class TopTrumpsController {
 
 	public TopTrumpsController(TopTrumpsModel model) {
 		this.model = model;
-		this.view = new TopTrumpsView(model);
+		this.view = new TopTrumpsView(model, this);
 	}
 
 	public void play() throws SQLException {
