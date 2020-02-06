@@ -18,9 +18,9 @@ public class TopTrumpsController {
 		
 		view.choosePlayOrStats();
 		int playerInput = scanner.nextInt();
-		//address while statements
 		while (!(playerInput == 1) && !(playerInput == 2)) {
 			view.checkInput();
+			playerInput = scanner.nextInt();
 		}
 		if (playerInput == 1) {
 			view.printStats();
@@ -28,9 +28,9 @@ public class TopTrumpsController {
 		if (playerInput == 2) {
 			view.choosePlayers();
 			noPlayers = scanner.nextInt();
-			//check
 			while (!(noPlayers >= 2) && !(noPlayers <= 5)) {
 				view.checkInput();
+				noPlayers = scanner.nextInt();
 			}
 			view.startGame();
 			model.setNoOfPlayers(noPlayers);
@@ -40,9 +40,9 @@ public class TopTrumpsController {
 				if(model.getWinnerOfRound() == 0) {
 					view.humanChooseCat();
 					int category = scanner.nextInt();
-					//check
 					while(!(category>=1) && !(category<=5)) {
 						view.checkInput();
+						category = scanner.nextInt();
 					}
 					model.setTrump(category);
 				}
