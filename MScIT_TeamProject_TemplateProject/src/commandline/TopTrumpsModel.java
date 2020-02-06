@@ -208,7 +208,7 @@ public class TopTrumpsModel {
 //			System.out.println(playersArrayList.get(i).cardsArray.get(0).toString());
 //			System.out.println(playersArrayList.get(i).cardsArray.size());
 //		}
-		System.out.println("Trumps is :" + (getTrump() + 1));
+//		System.out.println("Trumps is :" + (getTrump() + 1));
 	}
 
 	// method that checks who won the last round
