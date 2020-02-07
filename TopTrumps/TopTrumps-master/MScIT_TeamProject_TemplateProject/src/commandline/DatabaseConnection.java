@@ -118,7 +118,8 @@ public class DatabaseConnection {
     public void sendStatisticsDB(int GWinner, int CWins, int HWins, int NoDraws, int NoRounds) {
         Connection connection;
         try {
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/toptrumps", "postgres", "Thepeeps86");
+            connection = DriverManager.getConnection("jdbc:postgresql://yacata.dcs.gla.ac.uk:5432/",
+    "m_19_2474073k", "2474073k");
         } catch (SQLException e) {
             System.out.println("Connection failed!");
             e.printStackTrace();
