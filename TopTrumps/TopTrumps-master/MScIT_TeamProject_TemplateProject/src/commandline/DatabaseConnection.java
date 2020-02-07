@@ -84,12 +84,7 @@ public DatabaseConnection() throws SQLException {
        longestGame = resultLongestGame.getInt(1);
     }
    
-    //int rowcount = stmt.executeUpdate("INSERT INTO emp(empno, ename) VALUES("+empno+",'"+ename+"')");
-    
-	//stmt.executeUpdate("INSERT INTO game(Winner) VALUES("+View.play.gameOver()")");
-		//stmt.executeUpdate(statsUpdate);
     //do not forget to close the connection to your database!
-
     connection.close();
 
    } catch (SQLException e) {
@@ -105,12 +100,6 @@ public DatabaseConnection() throws SQLException {
 	public int getGamesPlayed() {
 		return gamesPlayed;
 	
-	
-	
-	    
-		 //String statsUpdate = ("INSERT INTO game(Winner) VALUES ("+PlayGame.statsArray.get(0)+"");
-		// stmt.executeUpdate(statsUpdate);
-		 	
 	}
 	
 	public int getComputerWins() {
@@ -141,7 +130,7 @@ public DatabaseConnection() throws SQLException {
 							
 					gamesTable = connection.createStatement();
 					gamesTable.executeUpdate("INSERT INTO games(winner,draws,no_of_rounds) VALUES("+GWinner+","+NoDraws+","+NoRounds+")");
-					//stmt.executeUpdate("INSERT INTO player(Winner) VALUES("+HWins+")");
+					
 					connection.close();
 	   } catch (SQLException e) {
 	    e.printStackTrace();
