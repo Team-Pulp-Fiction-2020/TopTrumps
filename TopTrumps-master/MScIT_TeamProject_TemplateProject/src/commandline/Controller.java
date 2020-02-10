@@ -1,4 +1,6 @@
-//import java.sql.SQLException;
+package commandline;
+
+import java.sql.SQLException;
 import java.util.Scanner;
 
 // controller class that calls methods from both the model and the view
@@ -22,11 +24,11 @@ public class Controller {
 
 		if (h == 1) { // if 1 call statistics ****** UPDATE WITH DATABASE STUFF
 			System.out.println("Called statistics\n"); // Just for testing to be removed
-//			try {
-//				view.returnStatistics();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
+			try {
+				view.returnStatistics();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 			this.play();
 		} else if (h == 2) { // if 2 play game
 			do {

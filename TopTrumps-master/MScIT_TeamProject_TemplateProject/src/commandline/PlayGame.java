@@ -1,6 +1,6 @@
+package commandline;
 
-
-//import java.sql.SQLException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -237,13 +237,13 @@ public class PlayGame {
 
 		if (gameWon() == true) {
 
-//			try {
-//				DatabaseConnection DC = new DatabaseConnection();
-//				DC.sendStatisticsDB(gameWinner, humanwins, computerwins, noOfDraws, noOfRounds - 1);
-//			} catch (SQLException e) {
-//// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+			try {
+				DatabaseConnection DC = new DatabaseConnection();
+				DC.sendStatisticsDB(gameWinner, humanwins, computerwins, noOfDraws, noOfRounds - 1);
+			} catch (SQLException e) {
+// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			/*
 			 * statsArray.add(noOfDraws); statsArray.add(gameWinner);
