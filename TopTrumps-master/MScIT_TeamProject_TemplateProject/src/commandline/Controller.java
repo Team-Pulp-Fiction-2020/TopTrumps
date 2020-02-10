@@ -1,13 +1,11 @@
-package commandline;
-
-import java.sql.SQLException;
+//import java.sql.SQLException;
 import java.util.Scanner;
 
 // controller class that calls methods from both the model and the view
 public class Controller {
-	// attributes
+// attributes
 	View view = new View();
-	// attributes for user input
+// attributes for user input
 	private Scanner humanSelect = new Scanner(System.in); // Create a Scanner object
 	private Scanner humanSelect2 = new Scanner(System.in); // Create a Scanner object
 	private Scanner humanSelect3 = new Scanner(System.in); // Create a Scanner object
@@ -16,7 +14,7 @@ public class Controller {
 	private int h3;
 
 	public void play() { // play method that calls everything
-		
+
 		do {
 			view.printGameStats(); // 1 or 2 to see stats or play game
 			h = humanSelect.nextInt(); // h = the user input
@@ -24,11 +22,11 @@ public class Controller {
 
 		if (h == 1) { // if 1 call statistics ****** UPDATE WITH DATABASE STUFF
 			System.out.println("Called statistics\n"); // Just for testing to be removed
-			try {
-				view.returnStatistics();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+//			try {
+//				view.returnStatistics();
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
 			this.play();
 		} else if (h == 2) { // if 2 play game
 			do {
@@ -42,7 +40,7 @@ public class Controller {
 		view.printGameStart(); // print Game started
 		do { // keep doing this until the game has been won
 			view.printRound(); // prints round number and players cards have been drawn
-			// if the human player has cards left prints out the one at position 0
+// if the human player has cards left prints out the one at position 0
 			if (view.play.getPlayersArrayList().get(0).getCardsArray().isEmpty() == false) {
 				view.printPlayerTopCard();
 			}
@@ -80,9 +78,9 @@ public class Controller {
 		} while (view.play.gameWon() == false); // end of do loop and game
 		view.printGameOver();// print game over, winner etc
 		view.play.gameOver(); // send stats to database ******* NEEDS UPDATED TO DO THIS!!*****
-		
-//		humanSelect.close();// close all the scanners  THESE THREW AN ERROR SO COMMENTED OUT
-//		humanSelect2.close();
-//		humanSelect3.close();
+
+// humanSelect.close();// close all the scanners  THESE THREW AN ERROR SO COMMENTED OUT
+// humanSelect2.close();
+// humanSelect3.close();
 	}
 }
