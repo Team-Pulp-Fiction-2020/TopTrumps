@@ -1,9 +1,11 @@
-/.metadata/
 /Card.class
 /ComPile.class
 /Controller.class
+/DatabaseConnection.class
 /MainTests.class
 /PlayGame.class
 /Player.class
 /View.class
-/DatabaseConnection.class
+/TopTrumps.class
+/TopTrumpsCLIApplication.class
+/LogFile.class

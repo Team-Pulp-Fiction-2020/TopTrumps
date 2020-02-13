@@ -1,12 +1,11 @@
 package commandline;
 
-import java.sql.SQLException;
 import java.util.Scanner;
 
 // controller class that calls methods from both the model and the view
 public class Controller {
 // attributes
-	View view = new View();
+	View view = new View(); // creates an instance of the view class
 // attributes for user input
 	private Scanner humanSelect = new Scanner(System.in); // Create a Scanner object
 	private Scanner humanSelect2 = new Scanner(System.in); // Create a Scanner object
@@ -17,69 +16,74 @@ public class Controller {
 
 	public void play() { // play method that calls everything
 
-		do {
-			view.printGameStats(); // 1 or 2 to see stats or play game
+		do {// ask the user if they want to see stats or play game
+			view.printGameStats(); // user needs to enter 1 or 2
 			h = humanSelect.nextInt(); // h = the user input
 		} while ((h != 1 && h != 2)); // keep looping until the correct number is entered
 
 		if (h == 1) { // if 1 call statistics ****** UPDATE WITH DATABASE STUFF
-			System.out.println("Called statistics\n"); // Just for testing to be removed
-			try {
-				view.returnStatistics();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			this.play();
+//			try {
+//				view.returnStatistics();
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//			this.play();
 		} else if (h == 2) { // if 2 play game
 			do {
-				view.printSelectPlayerNo(); // ask how many players
+				view.printSelectPlayerNo(); // ask how many players there are
 				h2 = humanSelect2.nextInt(); // h2 = user input
-			} while (!(h2 > 1 && h2 < 6)); // keep asking until the correct no is entered
-
-			view.play.setPlayers(h2); // set the number of players
+			} while (!(h2 > 1 && h2 < 6)); // keep asking until the correct no is entered, 2-5
+			view.getPlay().setPlayers(h2); // set the number of players to the user entry
 		}
-		view.play.deal(); // deal the cards
+		view.getPlay().deal(); // deal the cards
 		view.printGameStart(); // print Game started
+		view.getPlay().randomPlayerStart();// randomly select a player to start the game
+
 		do { // keep doing this until the game has been won
 			view.printRound(); // prints round number and players cards have been drawn
-// if the human player has cards left prints out the one at position 0
-			if (view.play.getPlayersArrayList().get(0).getCardsArray().isEmpty() == false) {
+			// if the human player has cards left print out the one at position 0
+			if (view.getPlay().getPlayersArrayList().get(0).getCardsArray().isEmpty() == false) {
 				view.printPlayerTopCard();
 			}
-			if (view.play.getWinnerOfRound() == -1) {// if it was a draw
-				view.play.setWinnerofRound(view.play.getPrevWinRound()); // set winner of round to previous winner
+			if (view.getPlay().getWinnerOfRound() == -1) {// if it was a draw
+				// set winner of round to previous winner
+				view.getPlay().setWinnerOfRound(view.getPlay().getPrevWinRound());
 			}
-			if (view.play.getWinnerOfRound() == 0) {// if human player has won
-				do {
-					view.printCategories();// print categories to choose
+			if (view.getPlay().getWinnerOfRound() == 0) {// if human player has won
+				do { // they need to select a category
+					view.printCategories();// print the categories to choose from
 					h3 = humanSelect3.nextInt();// h3 = user input
-				} while (!(h3 > 0 && h3 < 6)); // keep asking while until the correct number is entered
-				if (h3 < 1 || h3 > 5) {
-					view.printCategories();// ******* TRY CATCH NEEDED
-				} else if (h3 == 1) { // if 1
-					view.play.setTrump(0); // set to size
-				} else if (h3 == 2) { // if 2
-					view.play.setTrump(1); // set to speed
-				} else if (h3 == 3) { // if 3
-					view.play.setTrump(2);// set to range
-				} else if (h3 == 4) {// if 4
-					view.play.setTrump(3);// set to firepower
-				} else if (h3 == 5) {// if 5
-					view.play.setTrump(4);// set to cargo
+				} while (!(h3 > 0 && h3 < 6)); // keep asking until the correct number is entered 1-5
+				if (h3 == 1) { // if 1 is selected
+					view.getPlay().setTrump(0); // set trumps to size
+				} else if (h3 == 2) { // if 2 is selected
+					view.getPlay().setTrump(1); // set trumps to speed
+				} else if (h3 == 3) { // if 3 is selected
+					view.getPlay().setTrump(2);// set trumps to range
+				} else if (h3 == 4) {// if 4 is selected
+					view.getPlay().setTrump(3);// set trumps to firepower
+				} else if (h3 == 5) {// if 5 is selected
+					view.getPlay().setTrump(4);// set trumps to cargo
 				}
-			} else { // if not draw or human win pick ai card
-				view.play.aiPick(view.play.getPlayersArrayList().get(view.play.getWinnerOfRound()));
-				view.printTrumps();
+			} else { // if ai player has won call the aiPick method passing in the winner of the
+						// round
+				view.getPlay().aiPick(view.getPlay().getPlayersArrayList().get(view.getPlay().getWinnerOfRound()));
+				view.printTrumps(); // print out what trumps is
 			}
-			view.play.checkRound();// check to see who has won
-			view.printWinnerOfRound();
-			if (view.play.getWinnerOfRound() >= 0) { // if the last round was not a draw
-				view.play.setPrevWinRound(view.play.getWinnerOfRound());// set knew previous winner to winner
+			view.getPlay().checkRound();// check to see who has won the round
+			if (view.getPlay().getWinnerOfRound() == -1) { // if it's a draw
+				view.getPlay().isDraw();// call the draw method
 			}
-			view.play.addNoOfRounds();
-		} while (view.play.gameWon() == false); // end of do loop and game
-		view.printGameOver();// print game over, winner etc
-		view.play.gameOver(); // send stats to database ******* NEEDS UPDATED TO DO THIS!!*****
+			view.printWinnerOfRound(); // print the winner of the round / draw
+			if (view.getPlay().getWinnerOfRound() >= 0) { // if the last round was not a draw
+				view.getPlay().setPrevWinRound(view.getPlay().getWinnerOfRound());// set knew previous winner to winner
+				view.getPlay().cardsRound();// add the cards from the round to the winners deck
+			}
+			view.getPlay().addNoOfRounds(); // increment the no of rounds
+		} while (view.getPlay().gameWon() == false); // keep looping while game has not been won
+		view.printGameOver();// if game has been won, print game over, winner etc
+		// view.getPlay().gameOver(); // send stats to database ******* NEEDS UPDATED TO
+		// DO THIS!!*****
 
 // humanSelect.close();// close all the scanners  THESE THREW AN ERROR SO COMMENTED OUT
 // humanSelect2.close();

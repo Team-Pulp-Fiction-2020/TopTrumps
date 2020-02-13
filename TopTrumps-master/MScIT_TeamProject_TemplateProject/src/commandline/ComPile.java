@@ -1,3 +1,4 @@
+package commandline;
 //package commandline;
 import java.util.ArrayList;
 
@@ -22,7 +23,11 @@ public class ComPile {
 	}
 
 	public int getComPileSize() {
-		return comPile.size();
+		int size = 0;
+		if(!(comPile.isEmpty())) {
+			size = comPile.size();
+		}
+		return size;
 	}
 
 	public void setComPile(ArrayList<Card> comPile) {
