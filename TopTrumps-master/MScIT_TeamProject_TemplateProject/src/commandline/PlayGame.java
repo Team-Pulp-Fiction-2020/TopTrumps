@@ -17,7 +17,7 @@ public class PlayGame {
 	private int highPos;
 	private int highVal;
 	private ArrayList<Player> playersArrayList = new ArrayList<Player>();// array of players
-	private static Card[] deck = Card.shipArrayFill(); // deck of cards
+	private Card[] deck = Card.shipArrayFill(); // deck of cards
 	private ComPile comPile = new ComPile(); // create a class object this will hold communal pile
 	// array to hold categories
 	private ArrayList<Integer> statsArray = new ArrayList<Integer>();
@@ -63,8 +63,6 @@ public class PlayGame {
 	// method to deal the cards
 	// calls the shuffle method within it
 	public void deal() {
-		// calls the shuffle method
-		shuffle(deck);
 		// set int for card count
 		int cardCount = 0;
 		// deal
@@ -199,9 +197,6 @@ public class PlayGame {
 	public void cardsRound() {
 		// add the array to the winners pile
 		playersArrayList.get(highPos).cardsArray.addAll(cardsWon());
-		// give winner any cards in the communial pile by calling the removeCards method
-		// which removes the cards from the communial pile and returns the removed cards as an array
-		playersArrayList.get(highPos).cardsArray.addAll(comPile.removeCards());
 		winnerOfRound = highPos; // update the winnerOfRound
 		// call the addRound method to increments the players winRound attribute
 		playersArrayList.get(winnerOfRound).addRound();
@@ -338,16 +333,24 @@ public class PlayGame {
 		this.prevWinRound = prevWinRound;
 	}
 
-	public int getComPile() {
+	public int getComPileSize() {
 		return comPile.getComPileSize();
 	}
-
-	public static Card[] getDeck() {
-		return deck;
+	public void removeComPile(Player p) {
+		p.getCardsArray().addAll(comPile.removeCards());
+	}
+	
+	
+	public ComPile getComPile() {
+		return comPile;
 	}
 
-	public static void setDeck(Card[] deck) {
-		PlayGame.deck = deck;
+	public Card[] getDeck() {
+		return deck;
+	}
+	
+	public String toString(){
+		return "Hello";
 	}
 
 	public int getHighPos() {

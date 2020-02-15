@@ -30,8 +30,8 @@ public class ComPile {
 		return size;
 	}
 
-	public void setComPile(ArrayList<Card> comPile) {
-		this.comPile = comPile;
+	public ArrayList<Card> getComPile() {
+		return comPile;
 	}
 	
 }
